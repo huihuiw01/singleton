@@ -28,6 +28,7 @@ import static com.vmware.i18n.pattern.service.impl.PatternServiceImpl.localePath
 public class LocalLocaleOpt implements LocaleOpt{
 
     private Logger logger = LoggerFactory.getLogger(LocalLocaleOpt.class);
+
     private static final String BUNDLE_PREFIX = "messages_";
 	private static final String BUNDLE_SUFFIX = ".json";
 

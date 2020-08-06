@@ -4,7 +4,6 @@
  */
 package com.vmware.vipclient.i18n.messages.api.opt.server;
 
-import java.util.Map;
 import com.vmware.vipclient.i18n.VIPCfg;
 import com.vmware.vipclient.i18n.messages.api.opt.BaseOpt;
 import com.vmware.vipclient.i18n.messages.api.opt.ProductOpt;
@@ -15,6 +14,7 @@ import com.vmware.vipclient.i18n.util.ConstantsKeys;
 import org.json.simple.JSONArray;
 
 import java.util.List;
+import java.util.Map;
 
 public class RemoteProductOpt extends BaseOpt implements ProductOpt {
     private BaseDTO dto = null;
@@ -25,9 +25,7 @@ public class RemoteProductOpt extends BaseOpt implements ProductOpt {
 
     /**
      * get supported components from vip(non-Javadoc)
-     * 
-     * @see com.vmware.vipclient.i18n.messages.dao.IComponentDao#getComponents()
-     * @Deprecated Replaced by {@link com.vmware.vipclient.i18n.messages.api.opt.server.RemoteComponentOpt#getComponents()}
+     *
      */
     public List<String> getComponents() {
         JSONArray msgObject = new JSONArray();
@@ -48,9 +46,7 @@ public class RemoteProductOpt extends BaseOpt implements ProductOpt {
 
     /**
      * get supported locales from vip(non-Javadoc)
-     * 
-     * @see com.vmware.vipclient.i18n.messages.dao.ILocaleDao#getSupportedLocales()
-     * @deprecated Replaced by {@link com.vmware.vipclient.i18n.messages.api.opt.server.RemoteLocaleOpt#getSupportedLanguages(String)()}
+     *
      */
     public List<String> getSupportedLocales() {
         JSONArray msgObject = new JSONArray();

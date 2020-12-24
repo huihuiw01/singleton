@@ -5,6 +5,8 @@
 package com.vmware.vip.core.about.service.version;
 
 import com.vmware.vip.common.constants.ConstantsChar;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,8 @@ import com.vmware.vip.core.messages.service.product.ProductService;
 
 @Service
 public class VersionService implements IVersionService{
+    private static Logger logger = LoggerFactory.getLogger(VersionService.class);
+
     @Value("${build.name}")
     private String name;
 
@@ -39,7 +43,7 @@ public class VersionService implements IVersionService{
     ProductService productService;
 
     @Override
-    public BuildVersionDTO getBuildVersion(String productName, String version) throws AboutAPIException {
+    public BuildVersionDTO getBuildVersion(String productName, String version) {
         BuildVersionDTO buildVersionDTO = new BuildVersionDTO();
         buildVersionDTO.setService(getServiceVersion());
         if(!StringUtils.isEmpty(productName) && !StringUtils.isEmpty(version)){
@@ -72,17 +76,17 @@ public class VersionService implements IVersionService{
      * @return
      * @throws AboutAPIException
      */
-    private BundleVersionDTO getBundleVersion(String productName, String version) throws AboutAPIException {
+    private BundleVersionDTO getBundleVersion(String productName, String version) {
         BundleVersionDTO bundleVersionDTO = new BundleVersionDTO();
         bundleVersionDTO.setProductName(productName);
         bundleVersionDTO.setVersion(version);
         DropVersionDTO dropVersionDTO = null;
         try {
             dropVersionDTO = productService.getVersionInfo(productName, version);
+            bundleVersionDTO.setChangeId(dropVersionDTO.getDropId());
         } catch (L3APIException e) {
-            throw new AboutAPIException("[FATAL ERROR]Failed to get version info for "+ productName + ConstantsChar.BACKSLASH + version, e);
+            logger.warn(e.getMessage());
         }
-        bundleVersionDTO.setChangeId(dropVersionDTO.getDropId());
         return bundleVersionDTO;
     }
 }

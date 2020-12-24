@@ -30,11 +30,7 @@ public class ExceptionHandle {
 		APIResponseDTO response = new APIResponseDTO();
 		response.setData("");
 		response.setSignature("");
-		if (e instanceof AboutAPIException) {
-			logger.error("====== About API's Exception =======");
-			logger.error(e.getMessage());
-			response.setResponse(new Response(APIResponseStatus.INTERNAL_NO_RESOURCE_ERROR.getCode(), e.getMessage()));
-		} else if (e instanceof L3APIException) {
+		if (e instanceof L3APIException) {
 			logger.error("====== L3 API's Exception =======");
 			logger.error(e.getMessage());
 			response.setResponse(new Response(APIResponseStatus.INTERNAL_NO_RESOURCE_ERROR.getCode(), e.getMessage()));

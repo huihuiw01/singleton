@@ -18,5 +18,5 @@ public interface IVersionService {
      * @return
      * @throws AboutAPIException
      */
-    public BuildVersionDTO getBuildVersion(String productName, String version) throws AboutAPIException;
+    public BuildVersionDTO getBuildVersion(String productName, String version);
 }

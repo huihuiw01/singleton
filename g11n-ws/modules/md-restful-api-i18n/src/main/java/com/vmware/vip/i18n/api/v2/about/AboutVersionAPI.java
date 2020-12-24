@@ -7,6 +7,9 @@ package com.vmware.vip.i18n.api.v2.about;
 import com.vmware.vip.api.rest.APIOperation;
 import com.vmware.vip.api.rest.APIParamName;
 import com.vmware.vip.api.rest.APIParamValue;
+import com.vmware.vip.common.constants.ConstantsChar;
+import com.vmware.vip.common.i18n.status.Response;
+import com.vmware.vip.core.about.service.version.BuildVersionDTO;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +50,12 @@ public class AboutVersionAPI extends BaseAction {
             @ApiParam(name = APIParamName.VERSION, required = false, value = APIParamValue.VERSION) @RequestParam(required = false) String version) throws AboutAPIException {
         if(!StringUtils.isEmpty(productName) && !StringUtils.isEmpty(version)) {
             String availableVersion = super.getAvailableVersion(productName, version);
-            return super.handleVersionFallbackResponse(version, availableVersion, versionService.getBuildVersion(productName, availableVersion));
+            BuildVersionDTO buildVersionDTO = versionService.getBuildVersion(productName, availableVersion);
+            if(!StringUtils.isEmpty(buildVersionDTO.getBundle().getChangeId())){
+                return super.handleVersionFallbackResponse(version, availableVersion, buildVersionDTO);
+            }else{
+                return super.handleResponse(new Response(APIResponseStatus.INTERNAL_NO_RESOURCE_ERROR.getCode(), "[FATAL ERROR]Failed to get version info for "+ productName + ConstantsChar.BACKSLASH + version), buildVersionDTO);
+            }
         }else{
             return super.handleResponse(APIResponseStatus.OK, versionService.getBuildVersion(productName, version));
         }
